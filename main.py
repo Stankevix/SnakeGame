@@ -38,18 +38,22 @@ crashed = False
 x = (display_width * 0.45)
 y = (display_height * 0.8)
 
+flag_Left = False
+flag_Right = False
+flag_Down = False
+flag_UP = False
+
 # =======================FUNCTIONS==============================
 
 def food():
-	x = random.uniform(0,600)
-	y = random.uniform(0,800)
-	gameDisplay.blit(foodImage,(x,y))
+	#x = random.uniform(0,600)
+	#y = random.uniform(0,800)
+	gameDisplay.blit(foodImage,(10,50))
 
 
 def snake(x,y):
 	#drawing background stuffs
 	gameDisplay.blit(snakeImage,(x,y))
-
 
 while not crashed:
 	#get any event (click/keyboard)
@@ -60,20 +64,46 @@ while not crashed:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
 				x-=5
+				flag_UP = False
+				flag_Left = True
+				flag_Right = False
+				flag_Down = False
 			elif event.key == pygame.K_RIGHT:
 				x+=5
+				flag_UP = False
+				flag_Left = False
+				flag_Right = True
+				flag_Down = False
 			elif event.key == pygame.K_UP:
 				y-=5
+				flag_UP = True
+				flag_Left = False
+				flag_Right = False
+				flag_Down = False
 			elif event.key == pygame.K_DOWN:
 				y+=5
+				flag_UP = False
+				flag_Left = False
+				flag_Right = False
+				flag_Down = True
 		
 	gameDisplay.fill(white)
+	food()
 	snake(x,y)
-	#food()
 	pygame.display.update()
 	#define the number of frame per second
 	clock.tick(60)
-	x+=1
+
+	#Movement of the snake
+	if flag_UP == True:
+		y-=1
+	elif flag_Down == True:
+		y+=1
+	elif flag_Right == True:
+		x+=1
+	elif flag_Left == True:
+		x-=1
+
 pygame.quit()
 quit()
 
