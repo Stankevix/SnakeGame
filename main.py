@@ -51,30 +51,21 @@ def snake(x,y):
 	gameDisplay.blit(snakeImage,(x,y))
 
 
-def eventKeyboard(x,y):
-	if event.type == pygame.KEYDOWN:
-		##if event.key == pygame.K_DOWN:
-			#y=y-5
-		#elif event.key == pygame.K_UP:
-			#y=y+5
-		if event.key == pygame.K_LEFT:
-			x-=5
-		elif event.key == pygame.K_RIGHT:
-			x+=5
-
 while not crashed:
 	#get any event (click/keyboard)
 	#create a list of events per frame
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			crashed = True
-		
+			crashed = True	
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
 				x-=5
 			elif event.key == pygame.K_RIGHT:
 				x+=5
-
+			elif event.key == pygame.K_UP:
+				y-=5
+			elif event.key == pygame.K_DOWN:
+				y+=5
 		
 	gameDisplay.fill(white)
 	snake(x,y)
@@ -82,7 +73,7 @@ while not crashed:
 	pygame.display.update()
 	#define the number of frame per second
 	clock.tick(60)
-
+	x+=1
 pygame.quit()
 quit()
 
