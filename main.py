@@ -33,29 +33,31 @@ snakeImage = pygame.image.load('snake.png')
 foodImage = pygame.image.load('Food.png')
 
 clock = pygame.time.Clock()
-crashed = False
+
 
 x = (display_width * 0.45)
 y = (display_height * 0.8)
+x_food = random.uniform(0,600)
+y_food = random.uniform(0,800)
 
+crashed = False
 flag_Left = False
 flag_Right = False
 flag_Down = False
 flag_UP = False
+eat = False
 
 # =======================FUNCTIONS==============================
 
 def food():
-	#x = random.uniform(0,600)
-	#y = random.uniform(0,800)
-	gameDisplay.blit(foodImage,(10,50))
-
-
+	gameDisplay.blit(foodImage,(x_food,y_food))
+	
 def snake(x,y):
 	#drawing background stuffs
 	gameDisplay.blit(snakeImage,(x,y))
 
 while not crashed:
+
 	#get any event (click/keyboard)
 	#create a list of events per frame
 	for event in pygame.event.get():
@@ -63,30 +65,37 @@ while not crashed:
 			crashed = True	
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
-				x-=5
+				x-=1
 				flag_UP = False
 				flag_Left = True
 				flag_Right = False
 				flag_Down = False
 			elif event.key == pygame.K_RIGHT:
-				x+=5
+				x+=1
 				flag_UP = False
 				flag_Left = False
 				flag_Right = True
 				flag_Down = False
 			elif event.key == pygame.K_UP:
-				y-=5
+				y-=1
 				flag_UP = True
 				flag_Left = False
 				flag_Right = False
 				flag_Down = False
 			elif event.key == pygame.K_DOWN:
-				y+=5
+				y+=1
 				flag_UP = False
 				flag_Left = False
 				flag_Right = False
 				flag_Down = True
-		
+	
+	#Colision
+	print int(x), int(y), int(x_food), int(y_food)
+	if (int(x) <= int(x_food+1) or int(x)>= int(x_food-1)) and (int(y) <= int(y_food+1) and int(y) <= int(y_food-1)):
+		print "Colid"
+		x_food = random.uniform(0,600)
+		y_food = random.uniform(0,800)
+
 	gameDisplay.fill(white)
 	food()
 	snake(x,y)
@@ -103,6 +112,9 @@ while not crashed:
 		x+=1
 	elif flag_Left == True:
 		x-=1
+
+	
+		
 
 pygame.quit()
 quit()
